@@ -12,7 +12,9 @@
 			'use strict';
 
 			var scene;
-			var box; //mesh
+			var person;
+			var head;
+			var body;
 			var light;
 			var ambient;//全方向からあたる自然光
 			var camera;
@@ -28,14 +30,8 @@
 			scene = new THREE.Scene();
 
 			//mesh 物体
-			// - geometry 形状
-			// - material 材質
-			// 操作
-			// -position
-			// -scale
-			// -lotation
-			box = new THREE.Mesh(
-				new THREE.BoxGeometry(50, 50, 50),
+			head = new THREE.Mesh(
+				new THREE.BoxGeometry(20, 20, 20),
 				new THREE.MeshLambertMaterial({
 				 //color: 0xff0000 //16進数でカラーコード書く場合は0xを先頭につける
 				 // color: '#00ff00w' //16進数でカラーコード書く場合は''でかこってもok
@@ -44,15 +40,22 @@
 				 color: new THREE.Color(0xff0000) //オブジェクトも用意されている
 				}),				
 			);
-			//box.position.set(0, 0, 0);
-			box.position.x = 50;
-			box.position.y = 0;
-			box.position.z = 0;
-			//box.scale.set(2, 1, 0.5);
-			box.scale.x = 2
-			// box.rotation.x = 45 * Math.PI / 180
-			box.rotation.set(70 * Math.PI / 180, 0, 0)
-			scene.add(box)
+			head.position.set(0, 40, 0);
+			body = new THREE.Mesh(
+				new THREE.BoxGeometry(40, 60, 40),
+				new THREE.MeshLambertMaterial({
+				 //color: 0xff0000 //16進数でカラーコード書く場合は0xを先頭につける
+				 // color: '#00ff00w' //16進数でカラーコード書く場合は''でかこってもok
+				 // color: 'rgb(122, 32, 48)' //cssみたいにかける
+				 // color: 'hsl(100, 30%, 20%)'
+				 color: new THREE.Color(0xff0000) //オブジェクトも用意されている
+				}),				
+			);
+			body.position.set(0, 0, 0);			
+			person = new THREE.Group()
+			person.add(head)
+			person.add(body)
+			scene.add(person)
 
 			//light
 			light = new THREE.DirectionalLight(0xffffff, 1);
@@ -84,11 +87,7 @@
 			function render () {
 				requestAnimationFrame(render);
 
-				theta += 0.1
-				camera.position.x = Math.cos(THREE.Math.degToRad(theta)) * 300
-				camera.position.z = Math.sin(THREE.Math.degToRad(theta)) * 300
-				camera.lookAt(scene.position) 
-				//box.rotation.y += 0.01
+				person.rotation.y += 0.01
 				renderer.render(scene, camera)
 			}
 			render();
