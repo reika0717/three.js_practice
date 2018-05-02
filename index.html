@@ -32,7 +32,13 @@
 			// - material 材質
 			box = new THREE.Mesh(
 				new THREE.BoxGeometry(50, 50, 50),
-				new THREE.MeshLambertMaterial({ color: 0xff0000 }),				
+				new THREE.MeshLambertMaterial({
+				 //color: 0xff0000 //16進数でカラーコード書く場合は0xを先頭につける
+				 // color: '#00ff00w' //16進数でカラーコード書く場合は''でかこってもok
+				 // color: 'rgb(122, 32, 48)' //cssみたいにかける
+				 // color: 'hsl(100, 30%, 20%)'
+				 color: new THREE.Color(0xff0000) //オブジェクトも用意されている
+				}),				
 			);
 			box.position.set(0, 0, 0);
 			scene.add(box)
